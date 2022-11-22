@@ -4,9 +4,8 @@ const readline = require("readline");
 const path = require("path");
 const globby = require("globby");
 
-module.exports = async (program) =>
-  program
-    .command("init")
+module.exports = async (command) =>
+  command("init")
     .description("initializes a cli project")
     .action(async () => {
       const { PWD: currentPath } = process.env;
@@ -34,7 +33,13 @@ module.exports = async (program) =>
 
       const srcPath = path.resolve(__dirname, "../..");
       const filePathsToMove = await globby(
-        ["**", "!**/node_modules/**", "!**/.git/**", "!**/package-lock.json"],
+        [
+          "**",
+          "!**/node_modules/**",
+          "!**/.git/**",
+          "!**/package-lock.json",
+          "!**/commands/init.js",
+        ],
         {
           cwd: srcPath,
         }
@@ -54,6 +59,10 @@ module.exports = async (program) =>
       const currentPackageJson = JSON.parse(
         await fsPromises.readFile(packageJsonPath, "utf-8")
       );
+
+      await fsPromises.mkdir(path.join(destPath, "src/commands"), {
+        recursive: true,
+      });
 
       await fsPromises.writeFile(
         packageJsonPath,
