@@ -1,0 +1,17 @@
+{
+  "name": "cli-boilerplate",
+  "version": "1.0.0",
+  "description": "A boilerplate for setting up cli applications",
+  "keywords": [
+    "cli",
+    "commander",
+    "javascript"
+  ],
+  "author": "Nick Pray",
+  "license": "ISC",
+  "bin": "./src/index.js",
+  "dependencies": {
+    "commander": "^9.4.1",
+    "globby": "^11.1.0"
+  }
+}
